@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_post"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    tools:context=".activity.PostsFragment">
+
+    <ImageView
+        android:id="@+id/eventImage"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_event_placeholder_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/eventInfo"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:background="#424242"
+        android:paddingStart="6dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventImage">
+
+        <TextView
+            android:id="@+id/eventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="date"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintBottom_toTopOf="@id/eventTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:text="event title"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:layout_constraintBottom_toTopOf="@id/eventAuthor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventDate" />
+
+        <TextView
+            android:id="@+id/eventAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="author"
+            android:textColor="#9E9E9E"
+            android:textSize="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventTitle" />
+
+        <ImageView
+            android:id="@+id/circle_barrier"
+            android:layout_width="4dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_author_job_barrier"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/eventAuthorJob"
+            app:layout_constraintStart_toEndOf="@id/eventAuthor"
+            app:layout_constraintTop_toTopOf="@id/eventAuthor" />
+
+        <TextView
+            android:id="@+id/eventAuthorJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:visibility="gone"
+            android:text="author job"
+            android:textColor="#9E9E9E"
+            android:textSize="10dp"
+            app:layout_constraintStart_toEndOf="@id/circle_barrier"
+            app:layout_constraintTop_toTopOf="@id/eventAuthor" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/eventsBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="eventImage, eventInfo" />
+
+    <ImageButton
+        android:id="@+id/speakersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_speakers_button"
+        app:layout_constraintEnd_toStartOf="@id/participantsButton"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventsBarrier" />
+
+    <ImageButton
+        android:id="@+id/participantsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/ic_participants_button"
+        app:layout_constraintEnd_toStartOf="@id/joinButton"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/speakersButton"
+        app:layout_constraintTop_toBottomOf="@id/eventsBarrier" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/joinButton"
+        style="@style/Widget.AppTheme.JoinCheckBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/join_checkbox_tint"
+        android:layout_marginStart="150dp"
+        android:checkable="true"
+        android:text="Join"
+        app:icon="@drawable/checkbox_selector"
+        app:iconTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="4"
+        app:layout_constraintStart_toEndOf="@id/participantsButton"
+        app:layout_constraintTop_toBottomOf="@id/eventsBarrier"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

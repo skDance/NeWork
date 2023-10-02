@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">NeWork</string>
+    <string name="recentEntries">Recent Entries</string>
+    <string name="empty_posts">There are no posts.\nIf you create a new post, it will appear here</string>
+    <string name="add_post">Add post</string>
+    <string name="menu_remove">Remove</string>
+    <string name="menu_edit">Edit</string>
+    <string name="error_loading">Something went wrong. Try again later</string>
+    <string name="retry_loading">Retry</string>
+    <string name="dialog_auth_title">Authorization required</string>
+    <string name="dialog_auth_text">Sign in?</string>
+    <string name="dialog_logout_title">Are you sure you want to exit?</string>
+    <string name="dialog_positive_button">Yes</string>
+    <string name="dialog_negative_button">No</string>
+    <string name="chooser_share_post">Share Post</string>
+    <string name="remove" translatable="false">Remove</string>
+    <string name="sing_in">Sing in</string>
+    <string name="reg_error_password_confirm_null">Need to confirm password</string>
+    <string name="reg_error_password_confirm">Password confirmation error</string>
+    <string name="error_signin_log_or_pas">Login and password cannot be empty</string>
+    <string name="error_signin">Something went wrong. Try again.</string>
+    <string name="error_upload">Error upload</string>
+    <string name="joinTrue">Cancel</string>
+    <string name="joinFalse">Join</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NeWork</string>
+    <string name="recentEntries">Свежие записи</string>
+    <string name="empty_posts">Постов нет.\\nЕсли создадите новый пост, то он появится здесь</string>
+    <string name="add_post">Добавить пост</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="menu_edit">Редактировать</string>
+    <string name="error_loading">Что-то пошло не так. Попробуйте позднее</string>
+    <string name="retry_loading">Повторить</string>
+    <string name="dialog_auth_title">Требуется авторизация</string>
+    <string name="dialog_auth_text">Войти?</string>
+    <string name="dialog_logout_title">Вы уверены, что хотите выйти?</string>
+    <string name="dialog_positive_button">Да</string>
+    <string name="dialog_negative_button">Нет</string>
+    <string name="chooser_share_post">Поделиться</string>
+    <string name="sing_in">Войти</string>
+    <string name="reg_error_password_confirm_null">Необходимо подтвердить пароль</string>
+    <string name="reg_error_password_confirm">Ошибка подтверждения пароля</string>
+    <string name="error_signin_log_or_pas">Логин и пароль не могут быть пустыми</string>
+    <string name="error_signin">Что-то пошло не так. Повторите попытку.</string>
+    <string name="error_upload">Ошибка загрузки</string>
+    <string name="joinTrue">Отменить</string>
+    <string name="joinFalse">Присоединиться</string>
+</resources>
