@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/purple_50"
+    android:padding="16dp"
+    tools:context=".activity.NewJobFragment">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Company"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/position"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/position"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Position"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintBottom_toTopOf="@id/periodStart"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/periodStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Start in.."
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/periodFinish"
+        app:layout_constraintTop_toBottomOf="@id/position"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/periodFinish"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Finish in.."
+        android:inputType="date"
+        app:layout_constraintStart_toEndOf="@id/periodStart"
+        app:layout_constraintTop_toBottomOf="@id/position"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Link"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/periodStart"/>
+
+    <Button
+        android:id="@+id/addJobBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/link"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

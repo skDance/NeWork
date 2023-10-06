@@ -6,17 +6,20 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import ru.netology.nework.api.ApiService
 import ru.netology.nework.dao.EventDao
+import ru.netology.nework.dao.JobDao
 import ru.netology.nework.dao.PostDao
 import ru.netology.nework.dao.UserDao
 import ru.netology.nework.dto.Attachment
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.EventCreateRequest
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.MediaResponse
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.User
 import ru.netology.nework.entity.EventsEntity
+import ru.netology.nework.entity.JobEntity
 import ru.netology.nework.entity.PostEntity
 import ru.netology.nework.entity.UserEntity
 import ru.netology.nework.entity.toEntity
@@ -31,13 +34,13 @@ class RepositoryImpl @Inject constructor(
     private val postDao: PostDao,
     private val eventDao: EventDao,
     private val userDao: UserDao,
+    private val jobDao: JobDao,
     private val apiService: ApiService
 ) : Repository {
 
     override fun postData(): Flow<List<Post>> = postDao.getAll().map { it.map(PostEntity::toDto) }
-    override fun eventData(): Flow<List<Event>> =
-        eventDao.getAllEvents().map { it.map(EventsEntity::toDto) }
-
+    override fun eventData(): Flow<List<Event>> = eventDao.getAllEvents().map { it.map(EventsEntity::toDto) }
+    override fun jobData(): Flow<List<Job>> = jobDao.getJobs().map { it.map(JobEntity::toDto) }
     override fun userData(): Flow<List<User>> = userDao.getUsers().map { it.map(UserEntity::toDto) }
 
     override suspend fun getAllAsync() {
@@ -204,18 +207,36 @@ class RepositoryImpl @Inject constructor(
         upload: MediaUpload,
         attachmentType: AttachmentType
     ) {
-        try {
-            val media = upload(upload)
+            try {
+                val media = upload(upload)
 
-            val eventWithAttachment = event.copy(
-                attachment =
-                Attachment(
-                    url = media.url,
-                    type = attachmentType,
+                val eventWithAttachment = event.copy(
+                    attachment = Attachment(
+                        url = media.url,
+                        type = attachmentType,
+                    )
                 )
-            )
 
-            saveEvents(eventWithAttachment)
+                val eventRequest = EventCreateRequest(
+                    eventWithAttachment.id,
+                    eventWithAttachment.content,
+                    eventWithAttachment.datetime,
+                    eventWithAttachment.type,
+                    eventWithAttachment.attachment,
+                    eventWithAttachment.link,
+                    eventWithAttachment.speakerIds
+                )
+
+                val response = apiService.saveEvents(eventRequest)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+                println(response.message())
+
+            val body = response.body() ?: throw ApiError(response.message())
+
+            eventDao.saveEvent(EventsEntity.fromDto(body))
 
         } catch (e: AppError) {
             throw e
@@ -315,7 +336,7 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getParticipants(participantsId: List<Long>): List<User> {
+    override suspend fun getEventUsers(participantsId: List<Long>): List<User> {
         var participantsList: List<User> = emptyList()
         participantsId.forEach {
             val response = apiService.getUserById(it)
@@ -326,5 +347,81 @@ class RepositoryImpl @Inject constructor(
             participantsList += User(body.id, body.login, body.name, body.avatar)
         }
         return participantsList
+    }
+
+    override suspend fun getJobs(id: Long) {
+        try {
+            val response = apiService.getJobsById(id)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.message())
+
+            jobDao.insertJobs(body.toEntity(id))
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun getMyJobs(id: Long): List<Job> {
+        try {
+            var jobsList: List<Job> = emptyList()
+            val response = apiService.getMyJobs()
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.message())
+
+            jobsList = body
+            jobDao.insertJobs(body.toEntity(id))
+            return jobsList
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun saveJob(job: Job) {
+        try {
+            val response = apiService.saveJob(job)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            val jobResponse = response.body() ?: throw ApiError(response.message())
+
+            jobDao.insertJob(JobEntity.fromDto(jobResponse))
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
+    }
+
+    override suspend fun removeJobById(id: Long) {
+        try {
+            val response = apiService.removeJobById(id)
+
+            if (!response.isSuccessful) {
+                throw ApiError(response.message())
+            }
+
+            jobDao.removeById(id)
+
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
 }

@@ -58,18 +58,11 @@ class EventsFragment : Fragment() {
 
         val adapter = EventAdapter(object : onInteractionEventListener {
             override fun onJoin(event: Event) {
-                viewModel.joinById(event)
+                if (!authViewModel.authorized) showDialog(ConstValue.SING_IN) else viewModel.joinById(event)
             }
 
             override fun onParticipants(event: Event) {
                 if (event.participantsIds.isNotEmpty()) {
-//                    viewModel.openEventDialogId.value = event.id
-//                    viewModel.openEventDialogType.value = "participants"
-//                    val dialogFragment = ParticipantsDialogFragment()
-//                    val manager = activity!!.supportFragmentManager
-//                    val transaction: FragmentTransaction = manager.beginTransaction()
-//                    dialogFragment.show(transaction, "dialog")
-
                     viewModel.openEventDialogId.value = event
                     findNavController().navigate(R.id.action_eventsFragment_to_participantsDialogFragment,
                         Bundle().apply {
@@ -83,6 +76,30 @@ class EventsFragment : Fragment() {
                 }
             }
 
+            override fun onSpeakers(event: Event) {
+                if (event.speakerIds.isNotEmpty()) {
+                    viewModel.openEventDialogId.value = event
+                    findNavController().navigate(R.id.action_eventsFragment_to_participantsDialogFragment,
+                        Bundle().apply {
+                            eventId = event.id
+                            type = "speakers"
+                        })
+                } else {
+                    Snackbar.make(binding.root, "List is empty", Snackbar.LENGTH_LONG)
+                        .setAction(R.string.retry_loading) { viewModel.loadEvents() }
+                        .show()
+                }
+            }
+
+            override fun onEdit(event: Event) {
+                viewModel.edit(event)
+                findNavController().navigate(R.id.action_eventsFragment_to_newEventFragment)
+            }
+
+            override fun onRemove(eventId: Long) {
+                viewModel.removeById(eventId)
+            }
+
             override fun onAuthorName(event: Event) {
                 super.onAuthorName(event)
             }
@@ -91,9 +108,7 @@ class EventsFragment : Fragment() {
                 super.onAuthorJob(event)
             }
 
-            override fun onSpeakers(event: Event) {
-                super.onSpeakers(event)
-            }
+
         })
 
         binding.list.adapter = adapter

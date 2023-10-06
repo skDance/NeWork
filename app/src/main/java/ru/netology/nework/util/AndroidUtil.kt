@@ -13,10 +13,21 @@ object AndroidUtil {
     }
 
     fun formatDate(date: String): String {
-        val dateString = "2022-07-13T07:58:57.835201Z"
+        try {
+            val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+            val dateResult: Date = currentFormat.parse(date)
+            val targetFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            return targetFormat.format(dateResult)
+        } catch (_: Exception){
+            return date
+        }
+
+    }
+
+    fun formatDateWithoutTime(date: String): String {
         val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
-        val date: Date = currentFormat.parse(dateString)
-        val targetFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        return targetFormat.format(date)
+        val dateResult: Date = currentFormat.parse(date)
+        val targetFormat = SimpleDateFormat("yyyy-MM-dd")
+        return targetFormat.format(dateResult)
     }
 }

@@ -56,17 +56,23 @@ class EventViewModel @Inject constructor(
             }
     }
 
-    private val _participants1 = SingleLiveEvent<List<User>>()
-    val participants1: LiveData<List<User>>
-        get() = _participants1
+    private val _dialogUsers = SingleLiveEvent<List<User>>()
+    val dialogUsers: LiveData<List<User>>
+        get() = _dialogUsers
 
-    var participants: List<User> = emptyList()
+    private val _editedSpeakers = SingleLiveEvent<List<User>>()
+    val editedSpeakers: LiveData<List<User>>
+        get() = _editedSpeakers
+
+    val pickSpeaker: MutableLiveData<User> by lazy {
+        MutableLiveData<User>()
+    }
 
     val openEventDialogId: MutableLiveData<Event> by lazy {
         MutableLiveData<Event>()
     }
-    val openEventDialogType: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
+    val editedEvent: MutableLiveData<Event> by lazy {
+        MutableLiveData<Event>()
     }
 
     private val _state = MutableLiveData(EventModelState())
@@ -74,6 +80,7 @@ class EventViewModel @Inject constructor(
         get() = _state
 
     private val edited = MutableLiveData(emptyEvent)
+
     private val _eventCreated = SingleLiveEvent<Unit>()
     val eventCreated: LiveData<Unit>
         get() = _eventCreated
@@ -126,7 +133,8 @@ class EventViewModel @Inject constructor(
     }
 
     fun edit(event: Event) {
-        edited.value = event
+//        edited.value = event
+        editedEvent.value = event
     }
 
     fun getEditedId(): Long {
@@ -140,6 +148,7 @@ class EventViewModel @Inject constructor(
     fun changeContent(
         content: String,
         datetime: String,
+        link: String?,
         type: EventType,
         speakerIds: List<Long>
     ) {
@@ -150,6 +159,7 @@ class EventViewModel @Inject constructor(
         edited.value = edited.value?.copy(
             content = text,
             datetime = datetime,
+            link = link,
             type = type,
             speakerIds = speakerIds
         )
@@ -171,7 +181,6 @@ class EventViewModel @Inject constructor(
     fun save() {
         edited.value?.let { savingEvents ->
             _eventCreated.value = Unit
-
             viewModelScope.launch {
                 try {
                     when (_media.value) {
@@ -184,7 +193,8 @@ class EventViewModel @Inject constructor(
                             )
                         }
                     }
-                } catch (_: Exception) {
+                } catch (e: Exception) {
+                    _state.value = EventModelState(error = true)
                 }
             }
         }
@@ -193,10 +203,18 @@ class EventViewModel @Inject constructor(
         _media.value = MediaModel()
     }
 
-    fun getParticipants(event: Event) = viewModelScope.launch {
+    fun cleareDialogUsers() {
+        _dialogUsers.value = emptyList()
+    }
+
+    fun getEventUsers(event: Event, type: String) = viewModelScope.launch {
         try {
             _state.value = EventModelState(loading = true)
-            _participants1.value =  repository.getParticipants(event.participantsIds)
+            when(type) {
+                "speakers" -> _dialogUsers.value = repository.getEventUsers(event.speakerIds)
+                "edit event" -> _editedSpeakers.value = repository.getEventUsers(event.speakerIds)
+                "participants" -> _dialogUsers.value =  repository.getEventUsers(event.participantsIds)
+            }
             _state.value = EventModelState()
         } catch (e: Exception) {
             _state.value = EventModelState(error = true)

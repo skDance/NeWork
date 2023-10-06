@@ -3,6 +3,7 @@ package ru.netology.nework.repository
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nework.dto.AttachmentType
 import ru.netology.nework.dto.Event
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.MediaResponse
 import ru.netology.nework.dto.MediaUpload
 import ru.netology.nework.dto.Post
@@ -12,6 +13,7 @@ interface Repository {
     fun postData(): Flow<List<Post>>
     fun eventData(): Flow<List<Event>>
     fun userData(): Flow<List<User>>
+    fun jobData(): Flow<List<Job>>
 
 
     suspend fun getAllAsync()
@@ -28,5 +30,9 @@ interface Repository {
     suspend fun joinByIdEvents(event: Event)
     suspend fun getUsers()
     suspend fun getUserBuId(id: Long)
-    suspend fun getParticipants(participantsId: List<Long>): List<User>
+    suspend fun getEventUsers(participantsId: List<Long>): List<User>
+    suspend fun getJobs(id: Long)
+    suspend fun getMyJobs(id: Long): List<Job>
+    suspend fun saveJob(job: Job)
+    suspend fun removeJobById(id: Long)
 }

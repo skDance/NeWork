@@ -11,10 +11,18 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nework.auth.AppAuth
+import ru.netology.nework.dto.User
 import ru.netology.nework.model.UserModel
 import ru.netology.nework.model.UserModelState
 import ru.netology.nework.repository.Repository
 import javax.inject.Inject
+
+val emptyUser = User(
+    id = -1,
+    login = "",
+    name = "",
+    avatar = null
+)
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
@@ -26,7 +34,7 @@ class UserViewModel @Inject constructor(
         repository.userData()
             .map { user ->
                 UserModel(
-                    user.filter { user -> user.id != myId },
+                    user,
                     user.isEmpty()
                 )
             }
@@ -35,6 +43,10 @@ class UserViewModel @Inject constructor(
     private val _state = MutableLiveData(UserModelState())
     val state: LiveData<UserModelState>
         get() = _state
+
+    val openProfile: MutableLiveData<User> by lazy {
+        MutableLiveData<User>()
+    }
 
     init {
         getUsers()

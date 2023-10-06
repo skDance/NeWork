@@ -48,18 +48,30 @@
         android:id="@+id/posts_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:autoLink="web"
-        app:layout_constraintBottom_toTopOf="@id/videoFrame"
+        app:layout_constraintBottom_toTopOf="@id/link"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/posts_barrier1"
         tools:text="@sample/posts.json/data/content" />
 
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:autoLink="web"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/videoFrame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/posts_content" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/posts_barrier1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="post_avatar,posts_author,posts_published" />
@@ -76,10 +88,10 @@
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/posts_barrier2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="posts_content, attachmentImage" />
+        app:constraint_referenced_ids="posts_content, videoFrame, audioFrame, attachmentImage, link" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/likesButton"
@@ -121,10 +133,10 @@
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/attachmentImage"
+        app:layout_constraintBottom_toTopOf="@id/audioFrame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/posts_content">
+        app:layout_constraintTop_toBottomOf="@id/link">
 
         <VideoView
             android:id="@+id/videoView"
@@ -149,9 +161,9 @@
         android:layout_marginTop="8dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/posts_content"
+        app:layout_constraintTop_toBottomOf="@id/videoFrame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/posts_barrier2">
+        app:layout_constraintBottom_toTopOf="@id/attachmentImage">
 
         <ImageView
             android:id="@+id/playAudioBtn"
@@ -172,10 +184,11 @@
         android:id="@+id/attachmentImage"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/posts_barrier2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/videoFrame" />
+        app:layout_constraintTop_toBottomOf="@id/audioFrame"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

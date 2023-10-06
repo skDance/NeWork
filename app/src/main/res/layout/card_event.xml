@@ -16,7 +16,18 @@
         android:src="@drawable/ic_event_placeholder_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menuButton"
+        style="@style/Widget.AppTheme.MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:icon="@drawable/ic_more"
+        app:iconTint="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/eventImage"
+        app:layout_constraintTop_toTopOf="@id/eventImage" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:background="#424242"
-        android:paddingStart="6dp"
+        android:padding="6dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,23 +45,33 @@
             android:id="@+id/eventDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:text="date"
             android:textColor="@color/white"
-            android:textSize="10dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/eventTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
+            android:id="@+id/eventType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OFFLINE"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_marginStart="6dp"
+            app:layout_constraintStart_toEndOf="@id/eventDate"
+            app:layout_constraintTop_toTopOf="@id/eventDate"
+            app:layout_constraintBottom_toBottomOf="@id/eventDate"/>
+
+        <TextView
             android:id="@+id/eventTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="2dp"
             android:text="event title"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/eventAuthor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventDate" />
@@ -61,7 +82,7 @@
             android:layout_height="wrap_content"
             android:text="author"
             android:textColor="#9E9E9E"
-            android:textSize="10dp"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/eventTitle" />
 
@@ -74,17 +95,18 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/eventAuthorJob"
             app:layout_constraintStart_toEndOf="@id/eventAuthor"
-            app:layout_constraintTop_toTopOf="@id/eventAuthor" />
+            app:layout_constraintTop_toTopOf="@id/eventAuthor"
+            app:layout_constraintBottom_toBottomOf="@id/eventAuthor"/>
 
         <TextView
             android:id="@+id/eventAuthorJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:visibility="gone"
             android:text="author job"
             android:textColor="#9E9E9E"
-            android:textSize="10dp"
+            android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/circle_barrier"
             app:layout_constraintTop_toTopOf="@id/eventAuthor" />
 
@@ -127,8 +149,8 @@
         style="@style/Widget.AppTheme.JoinCheckBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/join_checkbox_tint"
         android:layout_marginStart="150dp"
+        android:backgroundTint="@color/join_checkbox_tint"
         android:checkable="true"
         android:text="Join"
         app:icon="@drawable/checkbox_selector"
@@ -136,7 +158,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="4"
         app:layout_constraintStart_toEndOf="@id/participantsButton"
-        app:layout_constraintTop_toBottomOf="@id/eventsBarrier"
-        />
+        app:layout_constraintTop_toBottomOf="@id/eventsBarrier" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,6 +14,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import ru.netology.nework.dto.Event
 import ru.netology.nework.dto.EventCreateRequest
+import ru.netology.nework.dto.Job
 import ru.netology.nework.dto.MediaResponse
 import ru.netology.nework.dto.Post
 import ru.netology.nework.dto.Token
@@ -119,5 +120,25 @@ interface ApiService {
     suspend fun unJoinByIdEvent(
         @Path("id") id: Long
     ): Response<Event>
+
+    @GET("my/jobs")
+    suspend fun getMyJobs(): Response<List<Job>>
+
+    @GET("{id}/jobs")
+    suspend fun getJobsById(
+        @Path("id") id: Long
+    ): Response<List<Job>>
+
+    @POST("my/jobs")
+    suspend fun saveJob(
+        @Body job: Job
+    ): Response<Job>
+
+    @DELETE("my/jobs/{id}")
+    suspend fun removeJobById(
+        @Path("id") id: Long
+    ): Response<Unit>
+
+
 
 }

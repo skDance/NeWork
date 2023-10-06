@@ -25,6 +25,7 @@ interface onInteractionPostListener {
     fun onEdit(post: Post) {}
     fun onPlayVideo(post: Post, videoView: VideoView? = null, videoFrame: FrameLayout) {}
     fun onPlayAudio(post: Post) {}
+    fun onLink(post: Post) {}
     fun openPost(post: Post) {}
     fun openPicture(post: Post) {}
 }
@@ -91,6 +92,12 @@ class PostViewHolder(
 
             videoFrame.isVisible = false
 
+            link.isVisible = (post.link != null)
+
+            if (post.link != null) {
+                link.text = post.link
+            }
+
             playVideoBtn.setOnClickListener {
                 onInteractionListener.onPlayVideo(post, videoView, videoFrame)
             }
@@ -131,9 +138,11 @@ class PostViewHolder(
                             .into(attachmentImage)
                         attachmentImage.layoutParams.height
                     }
+
                     AttachmentType.AUDIO -> {
                         audioFrame.isVisible = true
                     }
+
                     AttachmentType.VIDEO -> {
                         videoFrame.isVisible = true
 

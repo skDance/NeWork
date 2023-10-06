@@ -2,6 +2,7 @@ package ru.netology.nework.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -20,6 +21,8 @@ interface onInteractionEventListener {
     fun onSpeakers(event: Event) {}
     fun onAuthorName(event: Event) {}
     fun onAuthorJob(event: Event) {}
+    fun onRemove(eventId: Long) {}
+    fun onEdit(event: Event) {}
 }
 
 class EventAdapter(
@@ -46,7 +49,8 @@ class EventViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(event: Event) {
         binding.apply {
-            eventDate.text = AndroidUtil.formatDate(event.published)
+            eventDate.text = AndroidUtil.formatDate(event.datetime)
+            eventType.text = event.type.name
             eventTitle.text = event.content
             eventAuthor.text = event.author
             eventAuthorJob.text = event.authorJob
@@ -68,6 +72,28 @@ class EventViewHolder(
             }
             speakersButton.setOnClickListener {
                 onInteractionListener.onSpeakers(event)
+            }
+
+            menuButton.isVisible = event.ownedByMe
+            menuButton.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onInteractionListener.onRemove(event.id)
+                                true
+                            }
+
+                            R.id.edit -> {
+                                onInteractionListener.onEdit(event)
+                                true
+                            }
+
+                            else -> false
+                        }
+                    }
+                }.show()
             }
 
             Glide.with(eventImage)

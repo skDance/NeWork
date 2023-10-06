@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/jobPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Position"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/menuButton"
+        style="@style/Widget.AppTheme.MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        app:icon="@drawable/ic_more"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/jobName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@id/jobPosition"
+        app:layout_constraintEnd_toEndOf="@id/jobPosition"
+        app:layout_constraintTop_toBottomOf="@id/jobPosition"/>
+
+    <ImageView
+        android:id="@+id/iconPeriod"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_jobs_period"
+        app:layout_constraintStart_toStartOf="@id/jobName"
+        app:layout_constraintEnd_toStartOf="@id/jobPeriod"
+        app:layout_constraintTop_toBottomOf="@id/jobName"/>
+
+    <TextView
+        android:id="@+id/jobPeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textSize="10sp"
+        android:text="03.07.2023 - 10.07.2023"
+        app:layout_constraintStart_toEndOf="@id/iconPeriod"
+        app:layout_constraintEnd_toEndOf="@id/jobName"
+        app:layout_constraintTop_toTopOf="@id/iconPeriod"
+        app:layout_constraintBottom_toBottomOf="@id/iconPeriod"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

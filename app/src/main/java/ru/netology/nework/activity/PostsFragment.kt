@@ -99,7 +99,16 @@ class PostsFragment : Fragment() {
 
             override fun openPicture(post: Post) {
                 viewModel.openPicture.value = post.attachment?.url
-//                findNavController().navigate(R.id.action_feedFragment_to_openPictureFragment)
+                findNavController().navigate(R.id.action_postsFragment_to_openImageFragment)
+            }
+
+            override fun onLink(post: Post) {
+                val intent = if (post.link?.contains("https://") == true || post.link?.contains("http://") == true) {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(post.link))
+                } else {
+                    Intent(Intent.ACTION_VIEW, Uri.parse("http://${post.link}"))
+                }
+                startActivity(intent)
             }
 
             override fun onPlayAudio(post: Post) {
