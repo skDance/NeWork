@@ -58,9 +58,7 @@ class JobViewModel @Inject constructor(
     val jobCreated: LiveData<Unit>
         get() = _jobCreated
 
-    private val _jobEdit = MutableLiveData<Job>()
-    val jobEdit: LiveData<Job>
-        get() = _jobEdit
+    private val jobEdit = MutableLiveData(emptyJob)
 
     private val _state = MutableLiveData(JobModelState())
     val state: LiveData<JobModelState>
@@ -133,6 +131,6 @@ class JobViewModel @Inject constructor(
     }
 
     fun edit(job: Job) {
-         _jobEdit.value = job
+         editedJob.value = job
     }
 }

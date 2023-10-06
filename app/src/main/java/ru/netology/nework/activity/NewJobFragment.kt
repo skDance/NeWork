@@ -33,6 +33,22 @@ class NewJobFragment : Fragment() {
     ): View? {
         val binding = FragmentNewJobBinding.inflate(layoutInflater)
 
+        viewModel.editedJob.observe(viewLifecycleOwner) { job ->
+            with(binding) {
+                if (job != emptyJob) {
+                    name.setText(job?.name)
+                    position.setText(job?.position)
+                    val editStart = AndroidUtil.formatDate(job!!.start).split(" ").get(0)
+                    val editFinish =
+                        job.finish?.let { it1 -> AndroidUtil.formatDate(it1) }?.split(" ")?.get(0)
+                    periodStart.setText(editStart)
+                    periodFinish.setText(editFinish)
+                    link.setText(job.link)
+                }
+            }
+
+        }
+
         val jobStart = binding.periodStart
         val jobFinish = binding.periodFinish
 
@@ -76,23 +92,6 @@ class NewJobFragment : Fragment() {
             viewModel.save()
             hideKeyboard(requireView())
             findNavController().navigateUp()
-        }
-
-
-        viewModel.jobEdit.observe(viewLifecycleOwner) {job ->
-            with(binding) {
-                if (job != emptyJob) {
-                    name.setText(job?.name)
-                    position.setText(job?.position)
-                    val editStart = AndroidUtil.formatDate(job!!.start).split(" ").get(0)
-                    val editFinish =
-                        job.finish?.let { it1 -> AndroidUtil.formatDate(it1) }?.split(" ")?.get(0)
-                    periodStart.setText(editStart)
-                    periodFinish.setText(editFinish)
-                    link.setText(job.link)
-                }
-            }
-
         }
 
         return binding.root
