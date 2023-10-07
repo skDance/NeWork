@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -32,7 +33,7 @@ class ProfileFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by viewModels()
     private val usersViewModel: UserViewModel by viewModels()
-    private val jobViewModel: JobViewModel by viewModels()
+    private val jobViewModel: JobViewModel by activityViewModels()
 
     @Inject
     lateinit var appAuth: AppAuth
